@@ -44,7 +44,8 @@ repeat(forever)
 	if(getGyroRate(S2) > 3)
 	{
 		//右轉
-		//將馬達C的速度設為55，馬達B的速度設為45				setMotorSpeed(motorC, 55);
+		//將馬達C的速度設為55，馬達B的速度設為45			
+		setMotorSpeed(motorC, 55);
 		setMotorSpeed(motorB, 45);
 	}
 	 
