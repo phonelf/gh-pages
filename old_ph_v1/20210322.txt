@@ -1,0 +1,150 @@
+//此程式會重設陀螺儀的方向，並且使機器人旋轉90度。
+
+//將port2的陀螺儀重設為0度。
+resetGyro(S2);
+ 
+//一直重複執行轉向直到陀螺儀讀到的值大於90度
+repeatUntil(getGyroDegrees(S2) > 90)
+{
+	//左轉
+	setMotorSpeed(motorC, -50);
+	setMotorSpeed(motorB, 50);
+}
+ 
+//停止馬達
+setMotorSpeed(motorB, 0);
+setMotorSpeed(motorC, 0);
+
+
+//----------------------
+
+//使機器人旋轉90度
+
+ //一直重複執行轉向直到陀螺儀讀到的值大於90度(自上次重設位置)
+
+ repeatUntil(getGyroHeading(port4) > 90)
+ {
+  //左轉
+  setMotorSpeed(motor1, -50);
+  setMotorSpeed(motor6, 50);
+ }
+ 
+ //停止馬達
+ setMotorSpeed(motor1, 0);
+ setMotorSpeed(motor6, 0);
+
+
+
+//----------------------
+
+//無限迴圈
+repeat(forever)
+{
+	//如果機器人正在左轉，將之轉向右
+	if(getGyroRate(S2) > 3)
+	{
+		//右轉
+		//將馬達C的速度設為55，馬達B的速度設為45			
+		setMotorSpeed(motorC, 55);
+		setMotorSpeed(motorB, 45);
+	}
+	 
+	
+	//如果機器人正在右轉，將之轉向左
+	else if(getGyroRate(S2) < -3)
+	{
+		 //左轉
+		//將馬達C的速度設為45，馬達B的速度設為55 		
+    setMotorSpeed(motorC, 45);
+		setMotorSpeed(motorB, 55);
+	}
+	 
+	//其他狀況，直走
+	else
+	{
+		//直走
+		setMotorSpeed(motorC, 50);
+		setMotorSpeed(motorB, 50);
+	}
+}
+
+
+
+//-----------------------------------------
+
+
+
+//重複直至SENSOR讀到藍色(240) 
+repeatUntil(getColorHue(S3) == 240)
+{
+	//前進
+	setMotorSpeed(motorB, 50);
+	setMotorSpeed(motorC, 50);
+	delay(50);
+}
+//停止
+setMotorSpeed(motorB, 0);
+setMotorSpeed(motorC, 0);
+
+
+
+//--------------------------------------------------
+
+//找物體顏色 ，存成字串
+string colorOfObject;
+ repeat(forever){
+	//如果Port3的顏色Sensor偵測到紅色物體，將”RED “存至字串
+	if(getColorName(S3) == colorRed){
+		colorOfObject = "RED";
+		displayTextLine(2,"%s",colorOfObject);
+		delay(50);
+	}
+	 
+	//如果Port3的顏色Sensor偵測到藍物體，將”BLUE “存至字串
+	else if(getColorName(S3) == colorBlue){
+		//Store the text Blue into the color string
+		colorOfObject = "BLUE";
+		displayTextLine(2,"%s",colorOfObject);
+		delay(50);
+	}
+}
+
+
+
+//-----------------------------------------------
+
+
+//宣告變數
+long redValue;
+long greenValue;
+long blueValue;
+	while (true)
+	{
+	//讀取RGB三個channel的值
+	getColorRGB(colorSensor, redValue, greenValue, blueValue);
+
+	//將值存入DebugStreamLine
+	  writeDebugStreamLine("Colour detected: %d, %d, %d", redValue, greenValue, blueValue);
+		sleep(100);
+	}
+
+
+//--------------------------------------
+
+getColorAmbient(S3)； 
+//讀到port3的明暗度(red LED off)
+
+
+//--------------------
+
+getColorReflected(S3)；  
+//讀到port3的明暗度(red LED on)
+
+
+
+//-----------------------
+
+
+getColorSaturation(S3)； 
+ //讀到port3的飽和度
+
